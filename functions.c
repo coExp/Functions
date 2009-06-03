@@ -2,7 +2,7 @@
 /*     fonction.c        */
 /*************************/
 
-#include "fonctions.h"
+#include "functions.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // CHANGE L'EXTENTION D'UN FICHIER
@@ -126,3 +126,44 @@ int Copy_File ( FILE * Cible, FILE * Source )
 
 	return som ;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+// ECRIT LE FICHIER CIBLE AVEC LA MATRICE RELATION
+//
+int Write_matrix_to_file( FILE * cible, int nbr, char ** liste_nom, float ** mat_max, float ** mat_conso, int write_nom, int write_cons )
+{
+        int L, C ;
+
+        // Number of vertices
+        fprintf ( cible, "%d\n", nbr ) ;
+
+        // Name of vertices
+        if ( write_nom ) //OPTIONS & O_NOM )
+        {
+                for ( L = 0 ; L < nbr ; L++ )
+                        fprintf ( cible, "%s ", liste_nom [ L ] ) ;
+                fprintf ( cible, "\n" ) ;
+        }
+
+        // Matrix of max flow
+        for ( L = 0 ; L < nbr ; L++ )
+        {
+                for ( C = 0 ; C < nbr ; C++ )
+                        fprintf ( cible, "%f ", mat_max [ L ][ C ] ) ;
+                fprintf ( cible, "\n" ) ;
+        }
+        // ----------------
+        fprintf ( cible, "---------\n" ) ;
+
+        if ( write_cons ) //OPTIONS & O_CONSO )
+        {
+                for ( L = 0 ; L < nbr ; L++ )
+                {
+                        for ( C = 0 ; C < nbr ; C++ )
+                                fprintf ( cible, "%f ", mat_conso [ L ][ C ] ) ;
+                        fprintf ( cible, "\n" ) ;
+                }
+        }
+        return 0 ;
+} 
+
